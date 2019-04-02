@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cartellino{% endblock %}
+
+{% block body %}
+
+    <form class="form-inline" method="get">
+        <label class="sr-only" for="data">Name</label>
+        <input type="date" name="data" class="form-control mb-2 mr-sm-2" id="data" placeholder="mese/anno" required>
+
+        <label class="sr-only" for="codice">Codice</label>
+        <input type="text" name="codice" class="form-control mb-2 mr-sm-2" id="codice" placeholder="Codice" required>
+
+        <button type="submit" class="btn btn-primary mb-2">Cerca</button>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Data</th>
+            <th scope="col">1</th>
+            <th scope="col">2</th>
+            <th scope="col">3</th>
+            <th scope="col">4</th>
+            <th scope="col">5</th>
+            <th scope="col">6</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for day in timbrature %}
+        <tr>
+            <th scope="row">{{ day.data|date('m.d.Y') }}</th>
+            {% for t in day.timb %}
+                {% if t.timestamp is defined %}
+                    <td>{{ t.timestamp|date('H:i') }}</td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
