@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let calendar = new Calendar(calendarEl, {
         locale: 'it',
         timeZone: 'Europe/Rome',
-        contentHeight: 'auto',
+        // contentHeight: 'auto',
         plugins: [ dayGridPlugin ],
         defaultView: 'dayGridMonth',
 
@@ -23,13 +23,16 @@ document.addEventListener('DOMContentLoaded', function() {
             {
                 // url: 'http://tennis.locale/prenotazione/json',
                 url: urlJson.getAttribute('href'),
-                method: 'POST',
+                method: 'GET',
             },
         ],
+
+        eventColor: '#e6e6e6',
+        height: 'parent',
     });
 
     calendar.render();
-    calendar.updateSize();
+    // calendar.updateSize();
 });
 
 require('../css/calendar.css');

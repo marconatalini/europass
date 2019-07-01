@@ -10,7 +10,9 @@
 
 {% block body %}
 
-    <div class="" id="calendar"></div>
+    <div id='calendar-container'>
+        <div id='calendar'></div>
+    </div>
     <a class="hide" id="urlTimbratureJson" href="{{ path('timbrature_JSON', {'codice': codice}) }}"></a>
 
 {% endblock %}

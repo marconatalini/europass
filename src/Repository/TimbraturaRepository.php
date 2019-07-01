@@ -26,15 +26,12 @@ class TimbraturaRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('t');
 
-        $direzione = 0;
-//        $codice = 14727;
-
         return $qb->andWhere('t.timestamp BETWEEN :start AND :end')
-            ->andWhere('t.codice <= :codice')
+            ->andWhere('t.codice = :codice')
             ->setParameter('start', $start)
             ->setParameter('end', $end)
             ->setParameter('codice', $codice)
-            ->select('t.id','t.timestamp as start', 't.direzioneString as title')
+            ->select('t.id','t.timestamp as start', 't.direzione as title')
             ->getQuery()
             ->getResult();
     }

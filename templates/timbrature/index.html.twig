@@ -8,13 +8,11 @@
 {% endblock %}
 
 {% block body %}
-    <form class="form form-search text-center">
+    <form class="form-inline form-search" method="get" action="{{ path('timbrature_visualizza') }}">
         <div class="form-group">
-            <h1 class="h3 mb-3">Codice</h1>
-            <label for="inputTag" class="sr-only">Inserire codice (5 cifre)</label>
-            <input type="text" class="form-control-lg" id="inputTag" placeholder="Codice">
+            <input type="text" class="form-control mr-2" id="inputTag" placeholder="Codice" name="codice" autocomplete="off">
         </div>
-        <button type="submit" class="btn btn-lg btn-primary">Visualizza</button>
+        <button type="submit" class="btn btn-primary">Visualizza</button>
     </form>
 {% endblock %}
 
