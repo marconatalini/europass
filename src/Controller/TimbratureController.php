@@ -21,20 +21,23 @@ class TimbratureController extends AbstractController
     public function index(Request $request, TimbraturaRepository $timbraturaRepository)
     {
         $d = date_parse($request->get('data'));
-        $codice = $request->get('codice');
-
-        $timbrature = [];
-
-        if (null !== $codice){
-            for ($day = 1; $day<=31 ; $day++){
-                $dateTimb = date_create($d['year'].'-'.$d['month'].'-'.$day);
-                $record = $timbraturaRepository->findTimbrature($dateTimb,$codice);
-                $timbrature[] = ['data' => $dateTimb, 'timb' => $record];
-            }
-        }
+//        $codice = $request->get('codice');
+        $codice = 14727;
 
         return $this->render('timbrature/index.html.twig', [
-            'timbrature' => $timbrature,
+            'codice' => $codice,
+        ]);
+    }
+
+    /**
+     * @Route("/cartellino, name="timbrature_visualizza")
+     */
+    public function visualizza(Request $request){
+
+        $codice = $request->get('codice');
+
+        return $this->render('timbrature/timbrature.html.twig', [
+            'codice' => $codice,
         ]);
     }
 
@@ -122,5 +125,17 @@ class TimbratureController extends AbstractController
         $response->headers->set('Content-Type', 'text/plain');
 
         return $response;
+    }
+
+    /**
+     * @Route("/timbratureJson", name="timbrature_JSON")
+     */
+    public function timbratureJSON(Request $request, TimbraturaRepository $repository){
+        $codice = $request->get('codice');
+//        var_dump($codice);die;
+        $start = $request->get('start');
+        $end = $request->get('end');
+        $result = $repository->findTimbrature($start, $end, $codice);
+        return $this->json($result);
     }
 }

@@ -31,6 +31,11 @@ class Timbratura
      */
     private $direzione;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $direzioneString;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,4 +76,24 @@ class Timbratura
 
         return $this;
     }
+
+    public function getDirezioneString() : ?string
+    {
+        if ($this->direzione == 0){
+            return 'ENTRATA';
+        } else {
+            return 'USCITA';
+        }
+    }
+
+    public function setDirezioneString($direzioneString): self
+    {
+        if ($this->direzione == 0){
+            $this->direzioneString = 'ENTRATA';
+        } else {
+            $this->direzioneString = 'USCITA';
+        }
+    }
+
+
 }

@@ -22,19 +22,21 @@ class TimbraturaRepository extends ServiceEntityRepository
     /**
      * @return Timbratura[] array of timbrature
      */
-    public function findTimbrature($data, $codice)
+    public function findTimbrature($start, $end, $codice)
     {
-        //$interval = new \DateInterval('P31D');
+        $qb = $this->createQueryBuilder('t');
 
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.timestamp like :fromDate')
-            ->andWhere('t.codice = :codice')
-            ->setParameter('fromDate', $data->format('Y-m-d').'%')
+        $direzione = 0;
+//        $codice = 14727;
+
+        return $qb->andWhere('t.timestamp BETWEEN :start AND :end')
+            ->andWhere('t.codice <= :codice')
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
             ->setParameter('codice', $codice)
-            ->orderBy('t.timestamp', 'ASC')
+            ->select('t.id','t.timestamp as start', 't.direzioneString as title')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     // /**

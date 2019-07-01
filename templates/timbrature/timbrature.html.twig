@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cartellino{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('calendar') }}
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="" id="calendar"></div>
+    <a class="hide" id="urlTimbratureJson" href="{{ path('timbrature_JSON', {'codice': codice}) }}"></a>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('calendar') }}
+{% endblock %}
