@@ -31,6 +31,11 @@ class Timbratura
      */
     private $direzione;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $terminale;
+
 
     public function getId(): ?int
     {
@@ -69,6 +74,18 @@ class Timbratura
     public function setDirezione(int $direzione): self
     {
         $this->direzione = $direzione;
+
+        return $this;
+    }
+
+    public function getTerminale(): ?int
+    {
+        return $this->terminale;
+    }
+
+    public function setTerminale(int $terminale): self
+    {
+        $this->terminale = $terminale;
 
         return $this;
     }

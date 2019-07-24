@@ -7,14 +7,26 @@ use App\Repository\TimbraturaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\Publisher;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class TimbratureController
- * @package App\Controller
  */
 class TimbratureController extends AbstractController
 {
+    /**
+     * @var Publisher
+     */
+    private $publisher;
+
+    public function __construct(Publisher $publisher)
+    {
+        $this->publisher = $publisher;
+    }
+
+
     /**
      * @Route("/", name="timbrature_index")
      */
@@ -37,25 +49,26 @@ class TimbratureController extends AbstractController
     }
 
     /**
-     * @Route("/online", methods={"GET"}, name="timbrature_saveOnline")
-     * @return Response
+     * @Route("/live/{terminale<\d+>}", name="timbrature_live")
      */
-    public function saveOnline(Request $request) : Response
+    public function live($terminale){
+
+        return $this->render('timbrature/live.html.twig',[
+            'terminale' => $terminale
+        ]);
+    }
+
+    /**
+     * @Route("/online", methods={"GET"}, name="timbrature_saveOnline")
+     */
+    public function saveOnline(Request $request, Publisher $publisher) : Response
     {
         //00  CCCCCCC DD/MM/YY hhmm V
         $badge = $request->get('badge');
+        $terminalId = $request->get('id');
         $code = substr($badge, 6, 5);
         $timestamp = substr($badge, 12, 13);
         $direzione = substr($badge, -1);
-
-        /*
-        var_dump($code);
-        var_dump($timestamp);
-        var_dump($direzione);
-        var_dump(date_create_from_format('d/m/y Hi',$timestamp));
-        var_dump($request);
-        die();*/
-
 
         $pass = new Timbratura();
 
@@ -64,9 +77,20 @@ class TimbratureController extends AbstractController
         $pass->setCodice($code);
         $pass->setTimestamp(date_create_from_format('d/m/y Hi',$timestamp));
         $pass->setDirezione($direzione);
+        $pass->setTerminale($terminalId);
 
         $em->persist($pass);
         $em->flush();
+
+        $update = new Update('http://europass.locale/online/' . $pass->getTerminale(),
+            json_encode([
+                'codice' => $pass->getCodice(),
+                'time' =>$pass->getTimestamp(),
+                'terminale' => $pass->getTerminale(),
+                'direzione' => $pass->getDirezione(),
+            ]));
+
+        $publisher($update);
 
         // the headers public attribute is a ResponseHeaderBag
         $response = new Response();
@@ -142,4 +166,22 @@ class TimbratureController extends AbstractController
         }
         return $this->json($result);
     }
+
+    public function __invoke(Publisher $publisher, Timbratura $timbratura) : Response
+    {
+        $update = new Update(
+            'http://europass.locale/live',
+            json_encode([
+                'codice' => $timbratura->getCodice(),
+                'time' => $timbratura->getTimestamp()
+            ])
+        );
+
+        // The Publisher service is an invokable object
+        $publisher($update);
+
+        return new Response('published!');
+    }
+
+
 }

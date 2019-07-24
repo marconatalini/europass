@@ -30,6 +30,15 @@
       "css": [
         "/build/home.css"
       ]
+    },
+    "live": {
+      "js": [
+        "/build/runtime.js",
+        "/build/live.js"
+      ],
+      "css": [
+        "/build/live.css"
+      ]
     }
   }
 }
