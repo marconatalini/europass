@@ -9,12 +9,24 @@ document.addEventListener('DOMContentLoaded', function() {
     es.onmessage = e => {
         // Will be called every time an update is published by the server
         let obj = JSON.parse(e.data);
-        console.log(obj);
-        let liElement = document.createElement('li');
-        let liTxt = document.createTextNode(obj.codice +' -> '+ obj.time.getHours() +' '+ obj.direzione );
-        liElement.appendChild(liTxt);
+        // console.log(obj);
+        let divElement = document.createElement('div');
+        divElement.setAttribute('role','alert');
+        let direzione = obj.direzione;
+        if (direzione === 1) {
+            divElement.setAttribute('class', 'alert alert-success');
+        } else {
+            divElement.setAttribute('class', 'alert alert-danger');
+        }
+        let orario = new Date(obj.time.date);
+        let divTxt = document.createTextNode(obj.codice +' '+ orario.getHours() + ':' + orario.getMinutes());
+        divElement.appendChild(divTxt);
 
-        lista.prepend(liElement);
+        lista.prepend(divElement);
+
+        if (lista.childElementCount > 4) {
+            lista.lastChild.remove();
+        }
     }
 });
 

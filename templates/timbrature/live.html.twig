@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('live') }}
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('live') }}
@@ -7,13 +12,16 @@
 
 
 {% block body %}
-    <div class="container messages">
-        <h3>Ultime timbrature</h3>
-        <p>Example http://europass.locale/online?badge=00  0014727 11/07/19 0800 1&id=01</p>
-        <div class="js-terminale-id" data-id-terminale="{{ terminale }}">
-            <ul id="lista-timbrature">
-
-            </ul>
+    <div class="container ">
+        <h1>Registrazioni</h1>
+        <p class="small">Example http://europass.locale/online?badge=00  0014727 11/07/19 0800 1&id=01</p>
+        <div id="lista-timbrature" class="js-terminale-id" data-id-terminale="{{ terminale }}">
+            <div class="alert alert-success" role="alert">
+                ENTRATA: Numero TAG e Orario
+            </div>
+            <div class="alert alert-danger" role="alert">
+                USCITA: Numero TAG e Orario
+            </div>
         </div>
     </div>
 {% endblock %}
