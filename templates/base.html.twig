@@ -13,6 +13,36 @@
 </head>
 
 <body>
+{% block nav %}
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="{{ path('timbrature_index') }}">Europrofili</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Live
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ path('timbrature_live', {terminale: 2}) }}">Uffici</a>
+                        <a class="dropdown-item" href="{{ path('timbrature_live', {terminale: 1}) }}">Magazzino</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path('timbrature_live', {terminale: 3}) }}">Produzione</a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" action="{{ path('timbrature_visualizza') }}">
+                <input class="form-control mr-sm-2" type="search" placeholder="Codice" name="codice"
+                       aria-label="Search" autocomplete="off">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Controlla</button>
+            </form>
+        </div>
+    </nav>
+{% endblock %}
+
 {% block body %}{% endblock %}
 
 <!-- Optional JavaScript -->

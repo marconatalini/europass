@@ -17,17 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class TimbratureController extends AbstractController
 {
     /**
-     * @var Publisher
-     */
-    private $publisher;
-
-    public function __construct(Publisher $publisher)
-    {
-        $this->publisher = $publisher;
-    }
-
-
-    /**
      * @Route("/", name="timbrature_index")
      */
     public function index(Request $request, TimbraturaRepository $timbraturaRepository)
@@ -42,6 +31,11 @@ class TimbratureController extends AbstractController
     public function visualizza(Request $request){
 
         $codice = $request->get('codice');
+
+        if (null !== $codice) {
+            return $this->render('timbrature/index.html.twig', [
+            ]);
+        }
 
         return $this->render('timbrature/timbrature.html.twig', [
             'codice' => $codice,
@@ -90,7 +84,10 @@ class TimbratureController extends AbstractController
                 'direzione' => $pass->getDirezione(),
             ]));
 
-        $publisher($update);
+        try {
+            $publisher($update);
+        } catch (\Exception $e) {
+        }
 
         // the headers public attribute is a ResponseHeaderBag
         $response = new Response();
@@ -166,22 +163,4 @@ class TimbratureController extends AbstractController
         }
         return $this->json($result);
     }
-
-    public function __invoke(Publisher $publisher, Timbratura $timbratura) : Response
-    {
-        $update = new Update(
-            'http://europass.locale/live',
-            json_encode([
-                'codice' => $timbratura->getCodice(),
-                'time' => $timbratura->getTimestamp()
-            ])
-        );
-
-        // The Publisher service is an invokable object
-        $publisher($update);
-
-        return new Response('published!');
     }
-
-
-}

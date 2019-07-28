@@ -5,7 +5,17 @@ document.addEventListener('DOMContentLoaded', function() {
     let idTerminale = terminaleDiv.dataset.idTerminale;
     let lista = document.getElementById('lista-timbrature');
 
-    const es = new EventSource('http://192.168.10.10:3000/hub?topic=' + encodeURIComponent('http://europass.locale/online/' + idTerminale));
+    // const es = new EventSource('http://192.168.10.10:3000/hub?topic=' + encodeURIComponent('http://europass.locale/online/' + idTerminale));
+
+    // URL is a built-in JavaScript class to manipulate URLs
+    const u = new URL('http://192.168.10.10:3000/hub');
+    u.searchParams.append('topic', 'http://europass.locale/online/' + idTerminale);
+    // Subscribe to updates of several Book resources
+
+    console.log(u);
+
+    const es = new EventSource(u.href);
+
     es.onmessage = e => {
         // Will be called every time an update is published by the server
         let obj = JSON.parse(e.data);
@@ -14,17 +24,17 @@ document.addEventListener('DOMContentLoaded', function() {
         divElement.setAttribute('role','alert');
         let direzione = obj.direzione;
         if (direzione === 1) {
-            divElement.setAttribute('class', 'alert alert-success');
+            divElement.setAttribute('class', 'alert alert-success text-right');
         } else {
             divElement.setAttribute('class', 'alert alert-danger');
         }
         let orario = new Date(obj.time.date);
-        let divTxt = document.createTextNode(obj.codice +' '+ orario.getHours() + ':' + orario.getMinutes());
+        let divTxt = document.createTextNode(obj.codice +' ore: '+ orario.getHours() + ':' + orario.getMinutes());
         divElement.appendChild(divTxt);
 
         lista.prepend(divElement);
 
-        if (lista.childElementCount > 4) {
+        if (lista.childElementCount > 6) {
             lista.lastChild.remove();
         }
     }
