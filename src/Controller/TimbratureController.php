@@ -32,7 +32,7 @@ class TimbratureController extends AbstractController
 
         $codice = $request->get('codice');
 
-        if (null !== $codice) {
+        if (null == $codice || '' == $codice) {
             return $this->render('timbrature/index.html.twig', [
             ]);
         }
@@ -108,6 +108,7 @@ class TimbratureController extends AbstractController
     {
         //00  CCCCCCC DD/MM/YY hhmm V
         $badge = $request->get('badge');
+        $terminalId = $request->get('id');
         $code = substr($badge, 6, 5);
         $timestamp = substr($badge, 12, 13);
         $direzione = substr($badge, -1);
@@ -119,6 +120,7 @@ class TimbratureController extends AbstractController
         $pass->setCodice($code);
         $pass->setTimestamp(date_create_from_format('d/m/y Hi',$timestamp));
         $pass->setDirezione($direzione);
+        $pass->setTerminale($terminalId);
 
         $em->persist($pass);
         $em->flush();

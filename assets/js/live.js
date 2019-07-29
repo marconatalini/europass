@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let divElement = document.createElement('div');
         divElement.setAttribute('role','alert');
         let direzione = obj.direzione;
-        if (direzione === 1) {
+        if (direzione === 0) {
             divElement.setAttribute('class', 'alert alert-success text-right');
         } else {
             divElement.setAttribute('class', 'alert alert-danger');
