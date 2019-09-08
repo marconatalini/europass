@@ -13,13 +13,28 @@
 
 {% block body %}
     <div class="container ">
-        <h1>Registrazioni</h1>
+        <h1>Timbrature
+            {% if terminale == 1 %}
+                Magazzino
+            {% elseif terminale == 2 %}
+                Uffici
+            {% else %}
+                Produzione
+            {% endif %}
+        </h1>
         {#<p class="small">TEST http://192.168.29.98/online?badge=00  0014727 11/07/19 0800 1&id=01</p>#}
+        {#<p class="small">TEST http://europass.locale/online?badge=00  0014727 11/07/19 0800 1&id=02</p>#}
         <div id="lista-timbrature" class="js-terminale-id" data-id-terminale="{{ terminale }}">
-            <div class="alert alert-success text-right" role="alert">
+            {#<div class="alert alert-success text-right" role="alert">#}
+                {#ENTRATA: Numero TAG e Orario#}
+            {#</div>#}
+            {#<div class="alert alert-danger" role="alert">#}
+                {#USCITA: Numero TAG e Orario#}
+            {#</div>#}
+            <div class="tag entry text-right">
                 ENTRATA: Numero TAG e Orario
             </div>
-            <div class="alert alert-danger" role="alert">
+            <div class="tag exit">
                 USCITA: Numero TAG e Orario
             </div>
         </div>

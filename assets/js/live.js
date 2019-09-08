@@ -21,12 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
         let obj = JSON.parse(e.data);
         // console.log(obj);
         let divElement = document.createElement('div');
-        divElement.setAttribute('role','alert');
+        // divElement.setAttribute('role','alert');
         let direzione = obj.direzione;
-        if (direzione === 0) {
-            divElement.setAttribute('class', 'alert alert-success text-right');
-        } else {
-            divElement.setAttribute('class', 'alert alert-danger');
+        if (direzione === 0) { //ENTRATA
+            // divElement.setAttribute('class', 'alert alert-success text-right');
+            divElement.setAttribute('class', 'tag entry text-right');
+        } else { //USCITA
+            // divElement.setAttribute('class', 'alert alert-danger');
+            divElement.setAttribute('class', 'tag exit');
         }
         let orario = new Date(obj.time.date);
         let divTxt = document.createTextNode(obj.codice +' ore: '+ orario.getHours() + ':' + orario.getMinutes());

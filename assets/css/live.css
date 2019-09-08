@@ -1,0 +1,35 @@
+@keyframes entrata {
+    0% {margin-left: 0;}
+    80% {margin-left: 40%;}
+    90% {margin-left: 36%;}
+    100% {margin-left: 40%;}
+}
+
+div.tag {
+    width: 60%;
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+}
+
+.entry{
+    background-color: green;
+    margin-left: 40%;
+    animation-name: entrata;
+}
+
+@keyframes uscita {
+    0% {margin-left: 40%;}
+    80% {margin-left: 0%;}
+    90% {margin-left: 4%;}
+    100% {margin-left: 0%;}
+}
+
+.exit{
+    background-color: red;
+    animation-name: uscita;
+}
