@@ -19,7 +19,7 @@ class TimbratureController extends AbstractController
     /**
      * @Route("/", name="timbrature_index")
      */
-    public function index(Request $request, TimbraturaRepository $timbraturaRepository)
+    public function index()
     {
         return $this->render('timbrature/index.html.twig', [
         ]);
@@ -49,6 +49,18 @@ class TimbratureController extends AbstractController
 
         return $this->render('timbrature/live.html.twig',[
             'terminale' => $terminale
+        ]);
+    }
+
+    /**
+     * @Route("/live/all", name="timbrature_liveall")
+     */
+    public function liveall(TimbraturaRepository $timbraturaRepository) {
+
+        $presenti = $timbraturaRepository->getPresenti();
+
+        return $this->render('timbrature/liveall.html.twig', [
+            'presenti' => $presenti,
         ]);
     }
 

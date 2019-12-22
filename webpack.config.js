@@ -12,6 +12,15 @@ Encore
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
 
+    .copyFiles({
+        from: './assets/p5',
+        // optional target path, relative to the output dir
+        to: 'p5/[path][name].[ext]',
+        // if versioning is enabled, add the file hash too
+        //to: 'images/[path][name].[hash:8].[ext]',
+        // only copy files matching this pattern
+        pattern: /\.(js)$/
+        })
     /*
      * ENTRY CONFIG
      *
@@ -25,6 +34,7 @@ Encore
     .addEntry('calendar', './assets/js/calendar.js')
     .addEntry('home', './assets/js/home.js')
     .addEntry('live', './assets/js/live.js')
+
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 

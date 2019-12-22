@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <script src="{{ asset('build/p5/p5.min.js') }}"></script>
+    <script src="{{ asset('build/p5/matter.js') }}"></script>
+    <script src="{{ asset('build/p5/dipendente.js') }}"></script>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/p5/presenze.js') }}"></script>
+{% endblock %}
+
+
+{% block body %}
+    {#<p class="small">TEST http://192.168.29.98/online?badge=00  0014727 11/07/19 0800 1&id=01</p>#}
+    {#<p class="small">TEST http://europass.locale/online?badge=00  0014727 11/07/19 0800 1&id=02</p>#}
+    <div class="js-presenti" data-presenti="{{ presenti|json_encode|e('html_attr') }}"></div>
+    <div id="myCanvas"></div>
+{% endblock %}

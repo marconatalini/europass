@@ -36,6 +36,22 @@ class TimbraturaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPresenti()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT t1.codice, t1.timestamp, t1.terminale from timbratura t1 join
+(SELECT max(id) as maxId, codice FROM timbratura where timestamp >= current_date GROUP BY  codice) t2
+on (t1.id = t2.maxId) where t1.direzione = 0";
+        $stmt = $conn->prepare($sql);
+//        $stmt->bindValue(1, $id);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
     // /**
     //  * @return Timbratura[] Returns an array of Timbratura objects
     //  */

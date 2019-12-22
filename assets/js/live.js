@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // const es = new EventSource('http://192.168.10.10:3000/hub?topic=' + encodeURIComponent('http://europass.locale/online/' + idTerminale));
 
     // URL is a built-in JavaScript class to manipulate URLs
-    const u = new URL('http://192.168.10.10:3000/hub');
+    let u = new URL('http://192.168.10.10:3000/.well-known/mercure');
     u.searchParams.append('topic', 'http://europass.locale/online/' + idTerminale);
     // Subscribe to updates of several Book resources
 
@@ -40,5 +40,20 @@ document.addEventListener('DOMContentLoaded', function() {
             lista.lastChild.remove();
         }
     }
+
+/*    let btn = document.getElementById('add');
+
+    btn.addEventListener("click", function () {
+        let divElement = document.createElement('div');
+        divElement.setAttribute('class', 'tag entry text-right');
+        let divTxt = document.createTextNode('ENTRATA !!');
+        divElement.appendChild(divTxt);
+
+        lista.prepend(divElement);
+
+        if (lista.childElementCount > 6) {
+            lista.lastChild.remove();
+        }
+    });*/
 });
 
