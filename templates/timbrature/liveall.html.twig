@@ -2,14 +2,12 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <script src="{{ asset('build/p5/p5.min.js') }}"></script>
-    <script src="{{ asset('build/p5/matter.js') }}"></script>
-    <script src="{{ asset('build/p5/dipendente.js') }}"></script>
+    {{ encore_entry_link_tags('presenze') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('build/p5/presenze.js') }}"></script>
+    {{ encore_entry_script_tags('presenze') }}
 {% endblock %}
 
 

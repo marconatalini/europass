@@ -34,6 +34,7 @@ Encore
     .addEntry('calendar', './assets/js/calendar.js')
     .addEntry('home', './assets/js/home.js')
     .addEntry('live', './assets/js/live.js')
+    .addEntry('presenze', './assets/js/presenze.js')
 
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
